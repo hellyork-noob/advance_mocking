@@ -1,0 +1,1036 @@
+{
+  "app": "Advance Analyzer v2",
+  "schema": 2,
+  "exportedAt": "2026-10-31T16:09:36.005Z",
+  "mocks": [
+    {
+      "title": "Testbook 1",
+      "exam": "SSC CGL — Pre",
+      "date": "2026-10-31",
+      "subject": "Full Mock",
+      "correct": 81,
+      "incorrect": 14,
+      "unattempted": 5,
+      "score": 155,
+      "maxScore": 200,
+      "url": "",
+      "timeMinutes": 55,
+      "sections": [
+        {
+          "subject": "Maths",
+          "correct": 22,
+          "incorrect": 3,
+          "unattempted": 0,
+          "score": 42.5,
+          "maxScore": 50
+        },
+        {
+          "subject": "Reasoning",
+          "correct": 24,
+          "incorrect": 1,
+          "unattempted": 0,
+          "score": 47.5,
+          "maxScore": 50
+        },
+        {
+          "subject": "English",
+          "correct": 20,
+          "incorrect": 5,
+          "unattempted": 0,
+          "score": 37.5,
+          "maxScore": 50
+        },
+        {
+          "subject": "GS",
+          "correct": 15,
+          "incorrect": 5,
+          "unattempted": 5,
+          "score": 27.5,
+          "maxScore": 50
+        }
+      ],
+      "id": 1
+    },
+    {
+      "title": "Olive 1",
+      "exam": "SSC CGL — Pre",
+      "date": "2026-10-31",
+      "subject": "Full Mock",
+      "correct": 79,
+      "incorrect": 9,
+      "unattempted": 12,
+      "score": 153.5,
+      "maxScore": 200,
+      "url": "",
+      "timeMinutes": 52,
+      "sections": [
+        {
+          "subject": "Maths",
+          "correct": 24,
+          "incorrect": 0,
+          "unattempted": 1,
+          "score": 48,
+          "maxScore": 50
+        },
+        {
+          "subject": "Reasoning",
+          "correct": 22,
+          "incorrect": 2,
+          "unattempted": 1,
+          "score": 43,
+          "maxScore": 50
+        },
+        {
+          "subject": "English",
+          "correct": 19,
+          "incorrect": 4,
+          "unattempted": 2,
+          "score": 36,
+          "maxScore": 50
+        },
+        {
+          "subject": "GS",
+          "correct": 14,
+          "incorrect": 3,
+          "unattempted": 8,
+          "score": 26.5,
+          "maxScore": 50
+        }
+      ],
+      "id": 2
+    },
+    {
+      "title": "RBE Live 1",
+      "exam": "SSC CGL — Pre",
+      "date": "2026-10-31",
+      "subject": "Full Mock",
+      "correct": 72,
+      "incorrect": 14,
+      "unattempted": 14,
+      "score": 137,
+      "maxScore": 200,
+      "url": "",
+      "timeMinutes": 58,
+      "sections": [
+        {
+          "subject": "Maths",
+          "correct": 21,
+          "incorrect": 2,
+          "unattempted": 2,
+          "score": 41,
+          "maxScore": 50
+        },
+        {
+          "subject": "Reasoning",
+          "correct": 21,
+          "incorrect": 3,
+          "unattempted": 1,
+          "score": 40.5,
+          "maxScore": 50
+        },
+        {
+          "subject": "English",
+          "correct": 20,
+          "incorrect": 4,
+          "unattempted": 1,
+          "score": 38,
+          "maxScore": 50
+        },
+        {
+          "subject": "GS",
+          "correct": 10,
+          "incorrect": 5,
+          "unattempted": 10,
+          "score": 17.5,
+          "maxScore": 50
+        }
+      ],
+      "id": 3
+    },
+    {
+      "title": "Adda 1",
+      "exam": "IBPS Clerk — Pre",
+      "date": "2026-10-31",
+      "subject": "Full Mock",
+      "correct": 87,
+      "incorrect": 10,
+      "unattempted": 3,
+      "score": 84.5,
+      "maxScore": 100,
+      "url": "",
+      "timeMinutes": 60,
+      "sections": [
+        {
+          "subject": "Quant",
+          "correct": 25,
+          "incorrect": 4,
+          "unattempted": 1,
+          "score": 24,
+          "maxScore": 30
+        },
+        {
+          "subject": "Reasoning",
+          "correct": 28,
+          "incorrect": 2,
+          "unattempted": 0,
+          "score": 27.5,
+          "maxScore": 30
+        },
+        {
+          "subject": "English",
+          "correct": 34,
+          "incorrect": 4,
+          "unattempted": 2,
+          "score": 33,
+          "maxScore": 40
+        }
+      ],
+      "id": 4
+    },
+    {
+      "title": "Adda 2",
+      "exam": "IBPS Clerk — Pre",
+      "date": "2026-10-31",
+      "subject": "Full Mock",
+      "correct": 76,
+      "incorrect": 12,
+      "unattempted": 12,
+      "score": 73,
+      "maxScore": 100,
+      "url": "",
+      "timeMinutes": 58,
+      "sections": [
+        {
+          "subject": "Quant",
+          "correct": 24,
+          "incorrect": 3,
+          "unattempted": 3,
+          "score": 23.25,
+          "maxScore": 30
+        },
+        {
+          "subject": "Reasoning",
+          "correct": 22,
+          "incorrect": 5,
+          "unattempted": 3,
+          "score": 20.75,
+          "maxScore": 30
+        },
+        {
+          "subject": "English",
+          "correct": 30,
+          "incorrect": 4,
+          "unattempted": 6,
+          "score": 29,
+          "maxScore": 40
+        }
+      ],
+      "id": 5
+    },
+    {
+      "title": "RBE 2",
+      "exam": "SSC CGL — Pre",
+      "date": "2026-10-31",
+      "subject": "Full Mock",
+      "correct": 78,
+      "incorrect": 15,
+      "unattempted": 7,
+      "score": 148.5,
+      "maxScore": 200,
+      "url": "",
+      "timeMinutes": 54,
+      "sections": [
+        {
+          "subject": "Maths",
+          "correct": 22,
+          "incorrect": 3,
+          "unattempted": 0,
+          "score": 42.5,
+          "maxScore": 50
+        },
+        {
+          "subject": "Reasoning",
+          "correct": 21,
+          "incorrect": 4,
+          "unattempted": 0,
+          "score": 40,
+          "maxScore": 50
+        },
+        {
+          "subject": "English",
+          "correct": 20,
+          "incorrect": 4,
+          "unattempted": 1,
+          "score": 38,
+          "maxScore": 50
+        },
+        {
+          "subject": "GS",
+          "correct": 15,
+          "incorrect": 4,
+          "unattempted": 6,
+          "score": 28,
+          "maxScore": 50
+        }
+      ],
+      "id": 6
+    },
+    {
+      "title": "Testbook 1",
+      "exam": "IBPS Clerk — Pre",
+      "date": "2026-10-31",
+      "subject": "Full Mock",
+      "correct": 82,
+      "incorrect": 10,
+      "unattempted": 8,
+      "score": 79.5,
+      "maxScore": 100,
+      "url": "",
+      "sections": [
+        {
+          "subject": "Quant",
+          "correct": 25,
+          "incorrect": 3,
+          "unattempted": 2,
+          "score": 24.25,
+          "maxScore": 30
+        },
+        {
+          "subject": "Reasoning",
+          "correct": 24,
+          "incorrect": 2,
+          "unattempted": 4,
+          "score": 23.5,
+          "maxScore": 30
+        },
+        {
+          "subject": "English",
+          "correct": 33,
+          "incorrect": 5,
+          "unattempted": 2,
+          "score": 31.75,
+          "maxScore": 40
+        }
+      ],
+      "id": 7
+    }
+  ],
+  "exams": [
+    {
+      "name": "UPSSSC PET",
+      "date": "2026-11-01",
+      "id": 1
+    },
+    {
+      "name": "SSC CPO",
+      "date": "2026-11-22",
+      "id": 2
+    },
+    {
+      "name": "CGL MAINS",
+      "date": "2027-01-18",
+      "id": 3
+    }
+  ],
+  "playlists": [
+    {
+      "title": "ENGLISH",
+      "url": "https://www.youtube.com/playlist?list=PLsMCL_P04son8TfEuCbNKln30HjsXg8Fo",
+      "completed": false,
+      "videos": [
+        {
+          "id": "ci-bDpeDXPQ",
+          "title": "Free online course of English||aman vashist sir free course|| complete course of English|ssc english",
+          "url": "https://www.youtube.com/watch?v=ci-bDpeDXPQ",
+          "thumbnail": "https://i.ytimg.com/vi/ci-bDpeDXPQ/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "SWXg-IAv_kg",
+          "title": "Basics of English grammar||English for competitive exams||aman vashist free course||english grammar",
+          "url": "https://www.youtube.com/watch?v=SWXg-IAv_kg",
+          "thumbnail": "https://i.ytimg.com/vi/SWXg-IAv_kg/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "7rb9fFPLnmg",
+          "title": "Basics of English grammar||English for competitive exams||aman vashist free course||english grammar",
+          "url": "https://www.youtube.com/watch?v=7rb9fFPLnmg",
+          "thumbnail": "https://i.ytimg.com/vi/7rb9fFPLnmg/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "vMa8L4UZv0k",
+          "title": "Basics of English grammar||English for competitive exams||aman vashist free course||english grammar",
+          "url": "https://www.youtube.com/watch?v=vMa8L4UZv0k",
+          "thumbnail": "https://i.ytimg.com/vi/vMa8L4UZv0k/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "pebkzgUgpIg",
+          "title": "Basics of English grammar||English for competitive exams||aman vashist free course||english grammar",
+          "url": "https://www.youtube.com/watch?v=pebkzgUgpIg",
+          "thumbnail": "https://i.ytimg.com/vi/pebkzgUgpIg/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "EPwwyjj0fRU",
+          "title": "Pronoun||reflexive pronoun||English for competitive exams||aman vashist free course||english grammar",
+          "url": "https://www.youtube.com/watch?v=EPwwyjj0fRU",
+          "thumbnail": "https://i.ytimg.com/vi/EPwwyjj0fRU/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "gaSGX4lpWFA",
+          "title": "distributive pronoun||demonstrative Pronoun||English for competitive exams||aman vashist free course",
+          "url": "https://www.youtube.com/watch?v=gaSGX4lpWFA",
+          "thumbnail": "https://i.ytimg.com/vi/gaSGX4lpWFA/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "gXWj-ElM0pA",
+          "title": "Who vs whom||clauses vs phrases||gerund vs participle||English for competitive exams||free course",
+          "url": "https://www.youtube.com/watch?v=gXWj-ElM0pA",
+          "thumbnail": "https://i.ytimg.com/vi/gXWj-ElM0pA/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "CjvxsKsAIkI",
+          "title": "Relative pronoun||which vs that||who vs whom||pronoun ||English for competitive exams||free course",
+          "url": "https://www.youtube.com/watch?v=CjvxsKsAIkI",
+          "thumbnail": "https://i.ytimg.com/vi/CjvxsKsAIkI/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "JinniNZA7sU",
+          "title": "Relative pronoun||that vs what||complete pronoun||pronoun||English for competitive exams|free course",
+          "url": "https://www.youtube.com/watch?v=JinniNZA7sU",
+          "thumbnail": "https://i.ytimg.com/vi/JinniNZA7sU/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "_nhNSa3jjd4",
+          "title": "Complete pronoun||pronoun concepts||English for competitive exams|free course of english|ssc english",
+          "url": "https://www.youtube.com/watch?v=_nhNSa3jjd4",
+          "thumbnail": "https://i.ytimg.com/vi/_nhNSa3jjd4/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "gBPkcOyz4Vg",
+          "title": "Complete pronoun||pronoun concepts||English for competitive exams|free course of english|ssc english",
+          "url": "https://www.youtube.com/watch?v=gBPkcOyz4Vg",
+          "thumbnail": "https://i.ytimg.com/vi/gBPkcOyz4Vg/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "j6BGg9QH7jA",
+          "title": "Complete adjective||adjective concepts||English for competitive exams|free course of english|ssc cgl",
+          "url": "https://www.youtube.com/watch?v=j6BGg9QH7jA",
+          "thumbnail": "https://i.ytimg.com/vi/j6BGg9QH7jA/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "uSqLqEchUWQ",
+          "title": "Complete adjective||adjective concepts||English for competitive exams|free course of english|ssc cgl",
+          "url": "https://www.youtube.com/watch?v=uSqLqEchUWQ",
+          "thumbnail": "https://i.ytimg.com/vi/uSqLqEchUWQ/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "-oynF-VxSXY",
+          "title": "Complete adjective||adjective concepts||English for competitive exams|free course of english|ssc cgl",
+          "url": "https://www.youtube.com/watch?v=-oynF-VxSXY",
+          "thumbnail": "https://i.ytimg.com/vi/-oynF-VxSXY/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "QmUjqfszm3Q",
+          "title": "noun||complete noun||noun chapter||English for competitive exams|free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=QmUjqfszm3Q",
+          "thumbnail": "https://i.ytimg.com/vi/QmUjqfszm3Q/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "Pd0kxwSanNI",
+          "title": "noun||complete noun||noun chapter||English for competitive exams|free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=Pd0kxwSanNI",
+          "thumbnail": "https://i.ytimg.com/vi/Pd0kxwSanNI/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "F1F-NWnqveQ",
+          "title": "verb||complete verb||verb chapter||English for competitive exams|free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=F1F-NWnqveQ",
+          "thumbnail": "https://i.ytimg.com/vi/F1F-NWnqveQ/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "XxTz5hK0Hoo",
+          "title": "verb||complete verb||verb chapter||English for competitive exams|free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=XxTz5hK0Hoo",
+          "thumbnail": "https://i.ytimg.com/vi/XxTz5hK0Hoo/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "evk85DOEdj8",
+          "title": "verb||complete verb||verb chapter||English for competitive exams|free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=evk85DOEdj8",
+          "thumbnail": "https://i.ytimg.com/vi/evk85DOEdj8/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "9FxuTBoigNo",
+          "title": "subject verb agreement||sub verb||English for competitive exams|free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=9FxuTBoigNo",
+          "thumbnail": "https://i.ytimg.com/vi/9FxuTBoigNo/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "tud_qO6r44M",
+          "title": "subject verb agreement||sub verb||English for competitive exams|free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=tud_qO6r44M",
+          "thumbnail": "https://i.ytimg.com/vi/tud_qO6r44M/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "R1wf-uD32Dw",
+          "title": "Adverb||adverb complete||grammar||English for competitive exams||free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=R1wf-uD32Dw",
+          "thumbnail": "https://i.ytimg.com/vi/R1wf-uD32Dw/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "GOg7SBB-iJs",
+          "title": "Adverb||adverb complete||grammar||English for competitive exams||free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=GOg7SBB-iJs",
+          "thumbnail": "https://i.ytimg.com/vi/GOg7SBB-iJs/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "kjEbB41iewo",
+          "title": "Tense||tense complete||grammar||English for competitive exams||free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=kjEbB41iewo",
+          "thumbnail": "https://i.ytimg.com/vi/kjEbB41iewo/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "Si-o2ApYY4o",
+          "title": "Tense||tense complete||grammar||English for competitive exams||free course of english|ssc cgl 2022",
+          "url": "https://www.youtube.com/watch?v=Si-o2ApYY4o",
+          "thumbnail": "https://i.ytimg.com/vi/Si-o2ApYY4o/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "D2_OE-0Ou2k",
+          "title": "conjunction||conjunction complete||grammar||English for competitive exams||free course of english|",
+          "url": "https://www.youtube.com/watch?v=D2_OE-0Ou2k",
+          "thumbnail": "https://i.ytimg.com/vi/D2_OE-0Ou2k/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "H2d6DxIYEK8",
+          "title": "conjunction||conjunction complete||grammar||English for competitive exams||free course of english|",
+          "url": "https://www.youtube.com/watch?v=H2d6DxIYEK8",
+          "thumbnail": "https://i.ytimg.com/vi/H2d6DxIYEK8/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "I7hrN4fG6BQ",
+          "title": "Article||Articles complete||a an the||grammar||English for competitive exams||free course of english",
+          "url": "https://www.youtube.com/watch?v=I7hrN4fG6BQ",
+          "thumbnail": "https://i.ytimg.com/vi/I7hrN4fG6BQ/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "VYDhFE-ATPI",
+          "title": "Preposition||Preposition complete||fix prepositions||English for competitive exams||ssc cgl|ssc exam",
+          "url": "https://www.youtube.com/watch?v=VYDhFE-ATPI",
+          "thumbnail": "https://i.ytimg.com/vi/VYDhFE-ATPI/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "zhSaCjDiBbY",
+          "title": "Preposition||Preposition complete||fix prepositions||English for competitive exams||ssc cgl|ssc exam",
+          "url": "https://www.youtube.com/watch?v=zhSaCjDiBbY",
+          "thumbnail": "https://i.ytimg.com/vi/zhSaCjDiBbY/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "RF641xf8CFQ",
+          "title": "Advance verb|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc",
+          "url": "https://www.youtube.com/watch?v=RF641xf8CFQ",
+          "thumbnail": "https://i.ytimg.com/vi/RF641xf8CFQ/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "zGNO4nimEZk",
+          "title": "Advance verb|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc",
+          "url": "https://www.youtube.com/watch?v=zGNO4nimEZk",
+          "thumbnail": "https://i.ytimg.com/vi/zGNO4nimEZk/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "sR9rB_8FdFY",
+          "title": "Conditionals|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc",
+          "url": "https://www.youtube.com/watch?v=sR9rB_8FdFY",
+          "thumbnail": "https://i.ytimg.com/vi/sR9rB_8FdFY/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "3HX4wTy4Vz4",
+          "title": "Voice|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl|ssc",
+          "url": "https://www.youtube.com/watch?v=3HX4wTy4Vz4",
+          "thumbnail": "https://i.ytimg.com/vi/3HX4wTy4Vz4/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "j9NTpyHJt04",
+          "title": "Voice|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl|ssc",
+          "url": "https://www.youtube.com/watch?v=j9NTpyHJt04",
+          "thumbnail": "https://i.ytimg.com/vi/j9NTpyHJt04/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "WfruhXqDTRA",
+          "title": "Narration|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl|",
+          "url": "https://www.youtube.com/watch?v=WfruhXqDTRA",
+          "thumbnail": "https://i.ytimg.com/vi/WfruhXqDTRA/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "4X6s1ukC-M8",
+          "title": "Narration|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl|",
+          "url": "https://www.youtube.com/watch?v=4X6s1ukC-M8",
+          "thumbnail": "https://i.ytimg.com/vi/4X6s1ukC-M8/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "KdnoSlDYgWI",
+          "title": "Narration|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl|",
+          "url": "https://www.youtube.com/watch?v=KdnoSlDYgWI",
+          "thumbnail": "https://i.ytimg.com/vi/KdnoSlDYgWI/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "I_JkxJwZnHg",
+          "title": "Narration|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl|",
+          "url": "https://www.youtube.com/watch?v=I_JkxJwZnHg",
+          "thumbnail": "https://i.ytimg.com/vi/I_JkxJwZnHg/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "lbMRP__SZoI",
+          "title": "Narration|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl|",
+          "url": "https://www.youtube.com/watch?v=lbMRP__SZoI",
+          "thumbnail": "https://i.ytimg.com/vi/lbMRP__SZoI/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "XJd_Q0UJ8W0",
+          "title": "Narration|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl",
+          "url": "https://www.youtube.com/watch?v=XJd_Q0UJ8W0",
+          "thumbnail": "https://i.ytimg.com/vi/XJd_Q0UJ8W0/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "hsL6bVGVKH0",
+          "title": "Narration|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl",
+          "url": "https://www.youtube.com/watch?v=hsL6bVGVKH0",
+          "thumbnail": "https://i.ytimg.com/vi/hsL6bVGVKH0/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "7EpzNn7j9zA",
+          "title": "Narration|English for ssc|English for competitive exams|English grammar|english for cds|nda|ssc cgl",
+          "url": "https://www.youtube.com/watch?v=7EpzNn7j9zA",
+          "thumbnail": "https://i.ytimg.com/vi/7EpzNn7j9zA/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "kqVhA5jQHf8",
+          "title": "100 important rules of grammar|Golden rules of grammar|100 golden rules of English|120 imp rules",
+          "url": "https://www.youtube.com/watch?v=kqVhA5jQHf8",
+          "thumbnail": "https://i.ytimg.com/vi/kqVhA5jQHf8/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "IGpZdglzEOM",
+          "title": "Spotting errors ssc|english practice|ssc cgl practice|english for ssc exams|best teacher of english",
+          "url": "https://www.youtube.com/watch?v=IGpZdglzEOM",
+          "thumbnail": "https://i.ytimg.com/vi/IGpZdglzEOM/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "7cvbJJygx_g",
+          "title": "Sentence improvement|english practice|ssc cgl practice|english for ssc exams|best teacher of english",
+          "url": "https://www.youtube.com/watch?v=7cvbJJygx_g",
+          "thumbnail": "https://i.ytimg.com/vi/7cvbJJygx_g/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "ZYqZ26nQucs",
+          "title": "Idioms|Idioms tricks|vocab for ssc|nda|cds|vocab|ssc notification|ssc vocabulary||vocab tricks|",
+          "url": "https://www.youtube.com/watch?v=ZYqZ26nQucs",
+          "thumbnail": "https://i.ytimg.com/vi/ZYqZ26nQucs/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "1m7rLciZo-o",
+          "title": "Phrasal verbs|vocab for ssc|nda|cds|vocab|ssc notification|ssc vocabulary|phrasal verb|vocab tricks",
+          "url": "https://www.youtube.com/watch?v=1m7rLciZo-o",
+          "thumbnail": "https://i.ytimg.com/vi/1m7rLciZo-o/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "n-XojW7MWeA",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=n-XojW7MWeA",
+          "thumbnail": "https://i.ytimg.com/vi/n-XojW7MWeA/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "nX_mM-xmH2Y",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=nX_mM-xmH2Y",
+          "thumbnail": "https://i.ytimg.com/vi/nX_mM-xmH2Y/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "N_7oyzOOY2s",
+          "title": "Reading Comprehension|Editorial class|How to solve RC|cloze test|eduquity pattern RC|parajumbles|ssc",
+          "url": "https://www.youtube.com/watch?v=N_7oyzOOY2s",
+          "thumbnail": "https://i.ytimg.com/vi/N_7oyzOOY2s/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "kNQqMB09QNY",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=kNQqMB09QNY",
+          "thumbnail": "https://i.ytimg.com/vi/kNQqMB09QNY/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "N0TyuP9143g",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=N0TyuP9143g",
+          "thumbnail": "https://i.ytimg.com/vi/N0TyuP9143g/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "8jp9cFgAwUQ",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=8jp9cFgAwUQ",
+          "thumbnail": "https://i.ytimg.com/vi/8jp9cFgAwUQ/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "9xIF1_H4S3c",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=9xIF1_H4S3c",
+          "thumbnail": "https://i.ytimg.com/vi/9xIF1_H4S3c/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "MctH0PF875w",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=MctH0PF875w",
+          "thumbnail": "https://i.ytimg.com/vi/MctH0PF875w/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "6L_tyhMgqR8",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=6L_tyhMgqR8",
+          "thumbnail": "https://i.ytimg.com/vi/6L_tyhMgqR8/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "VNfbWlJqbrg",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=VNfbWlJqbrg",
+          "thumbnail": "https://i.ytimg.com/vi/VNfbWlJqbrg/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "tdSMK4xukOY",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=tdSMK4xukOY",
+          "thumbnail": "https://i.ytimg.com/vi/tdSMK4xukOY/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "9_a8yOnlKG4",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|Reading comprehension|Editorial",
+          "url": "https://www.youtube.com/watch?v=9_a8yOnlKG4",
+          "thumbnail": "https://i.ytimg.com/vi/9_a8yOnlKG4/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "ancAwZ1x7HM",
+          "title": "RC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|The hindu editorial|Editorial",
+          "url": "https://www.youtube.com/watch?v=ancAwZ1x7HM",
+          "thumbnail": "https://i.ytimg.com/vi/ancAwZ1x7HM/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "WFp-tmZ-gDc",
+          "title": "The hindu editorial|EditorialRC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|",
+          "url": "https://www.youtube.com/watch?v=WFp-tmZ-gDc",
+          "thumbnail": "https://i.ytimg.com/vi/WFp-tmZ-gDc/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "5tMbtJcyy5I",
+          "title": "The hindu editorial|EditorialRC|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|",
+          "url": "https://www.youtube.com/watch?v=5tMbtJcyy5I",
+          "thumbnail": "https://i.ytimg.com/vi/5tMbtJcyy5I/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "XqfCL8SCj7M",
+          "title": "Practice class- 1|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|EditorialRC|ssc",
+          "url": "https://www.youtube.com/watch?v=XqfCL8SCj7M",
+          "thumbnail": "https://i.ytimg.com/vi/XqfCL8SCj7M/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "XYCKngZ6nY0",
+          "title": "Practice class- 2|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|EditorialRC|ssc",
+          "url": "https://www.youtube.com/watch?v=XYCKngZ6nY0",
+          "thumbnail": "https://i.ytimg.com/vi/XYCKngZ6nY0/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "KkcBqkfVg48",
+          "title": "Practice class- 3|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|EditorialRC|ssc",
+          "url": "https://www.youtube.com/watch?v=KkcBqkfVg48",
+          "thumbnail": "https://i.ytimg.com/vi/KkcBqkfVg48/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "qunm18AeD84",
+          "title": "Practice class- 4|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|EditorialRC|ssc",
+          "url": "https://www.youtube.com/watch?v=qunm18AeD84",
+          "thumbnail": "https://i.ytimg.com/vi/qunm18AeD84/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "7gryHNch2gg",
+          "title": "Practice class- 5|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|EditorialRC|ssc",
+          "url": "https://www.youtube.com/watch?v=7gryHNch2gg",
+          "thumbnail": "https://i.ytimg.com/vi/7gryHNch2gg/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "u1DxVYjRYB4",
+          "title": "Practice class- 6|CLOZE TEST|PARAJUMBLES|Aman sir paid batch|Free course of English|EditorialRC|ssc",
+          "url": "https://www.youtube.com/watch?v=u1DxVYjRYB4",
+          "thumbnail": "https://i.ytimg.com/vi/u1DxVYjRYB4/mqdefault.jpg",
+          "completed": false
+        }
+      ],
+      "id": 1
+    },
+    {
+      "title": "MATHS",
+      "url": "https://www.youtube.com/playlist?list=PL5SDlP42gG0jWphtvDwyDfAss3kdetm5C",
+      "completed": false,
+      "videos": [
+        {
+          "id": "vntnULxgQHc",
+          "title": "Complete Permutations and Combinations (क्रमचय और संचय) for All Competitive Exams",
+          "url": "https://www.youtube.com/watch?v=vntnULxgQHc",
+          "thumbnail": "https://i.ytimg.com/vi/vntnULxgQHc/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "qO4qILVSWzk",
+          "title": "Probability part 1| Basics and questions based on Coins| SSC CGL and CHSL Tier-2| Banking| Railway",
+          "url": "https://www.youtube.com/watch?v=qO4qILVSWzk",
+          "thumbnail": "https://i.ytimg.com/vi/qO4qILVSWzk/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "2RFIGVQf25E",
+          "title": "Probability part-2| DICE all types| SSC CGL and CHSL Tier-2| Banking| Railway",
+          "url": "https://www.youtube.com/watch?v=2RFIGVQf25E",
+          "thumbnail": "https://i.ytimg.com/vi/2RFIGVQf25E/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "2utAk6OVI94",
+          "title": "Probability part 3| Questions Based on Cards| SSC CGL and CHSL Tier-2| Banking| Railway",
+          "url": "https://www.youtube.com/watch?v=2utAk6OVI94",
+          "thumbnail": "https://i.ytimg.com/vi/2utAk6OVI94/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "aMoCNA-dqSw",
+          "title": "Probability part 4| Choice between Ball and persons| SSC CGL and CHSL Tier-2| Banking| Railway",
+          "url": "https://www.youtube.com/watch?v=aMoCNA-dqSw",
+          "thumbnail": "https://i.ytimg.com/vi/aMoCNA-dqSw/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "XZjwQadfQHA",
+          "title": "Probability part 5| CIRCULAR ARRANGEMENT| SSC CGL and CHSL Tier-2| Banking| Railway",
+          "url": "https://www.youtube.com/watch?v=XZjwQadfQHA",
+          "thumbnail": "https://i.ytimg.com/vi/XZjwQadfQHA/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "8m2U0rYUwkU",
+          "title": "Probability (प्रायिकता) Best Questions| Bayes Theorem, beggars theorem,  binomial distribution 🔥",
+          "url": "https://www.youtube.com/watch?v=8m2U0rYUwkU",
+          "thumbnail": "https://i.ytimg.com/vi/8m2U0rYUwkU/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "ltOTJ_5a3C4",
+          "title": "Probability Set Theory Detailed class|Very Important for SSC CGL & CHSL Tier-2| Must watch",
+          "url": "https://www.youtube.com/watch?v=ltOTJ_5a3C4",
+          "thumbnail": "https://i.ytimg.com/vi/ltOTJ_5a3C4/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "0SOYnfLFuQE",
+          "title": "MOD function and Monty hall riddle probability questions | Must cover for upcoming SSC exams",
+          "url": "https://www.youtube.com/watch?v=0SOYnfLFuQE",
+          "thumbnail": "https://i.ytimg.com/vi/0SOYnfLFuQE/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "7DhD1hQlMX4",
+          "title": "Unique Concept Asked in SSC Selection Post Phase XIII 2025| दिमाग घूम जाएगा| Shubham Sir 🔥",
+          "url": "https://www.youtube.com/watch?v=7DhD1hQlMX4",
+          "thumbnail": "https://i.ytimg.com/vi/7DhD1hQlMX4/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "0JyetOW7eE8",
+          "title": "Probability part 6| Basics and questions based on Coins| SSC CGL and CHSL Tier-2| Banking| Railway",
+          "url": "https://www.youtube.com/watch?v=0JyetOW7eE8",
+          "thumbnail": "https://i.ytimg.com/vi/0JyetOW7eE8/mqdefault.jpg",
+          "completed": false
+        },
+        {
+          "id": "FcJqHY8_BDI",
+          "title": "IB ACIO 2025 new pattern Question| Number system + probability| 99% failed to solve| Shubham sir",
+          "url": "https://www.youtube.com/watch?v=FcJqHY8_BDI",
+          "thumbnail": "https://i.ytimg.com/vi/FcJqHY8_BDI/mqdefault.jpg",
+          "completed": false
+        }
+      ],
+      "id": 2
+    }
+  ],
+  "customExamProfiles": [
+    {
+      "key": "SSC CGL — Pre",
+      "name": "SSC CGL",
+      "tier": "Pre",
+      "durationMinutes": 60,
+      "sections": [
+        {
+          "name": "Maths",
+          "questions": 25,
+          "positive": 2,
+          "negative": 0.5,
+          "maxMarks": 50
+        },
+        {
+          "name": "Reasoning",
+          "questions": 25,
+          "positive": 2,
+          "negative": 0.5,
+          "maxMarks": 50
+        },
+        {
+          "name": "English",
+          "questions": 25,
+          "positive": 2,
+          "negative": 0.5,
+          "maxMarks": 50
+        },
+        {
+          "name": "GS",
+          "questions": 25,
+          "positive": 2,
+          "negative": 0.5,
+          "maxMarks": 50
+        }
+      ],
+      "createdAt": "2026-10-31T06:17:06.512Z",
+      "id": 1
+    },
+    {
+      "key": "SSC CGL — Mains",
+      "name": "SSC CGL",
+      "tier": "Mains",
+      "durationMinutes": 120,
+      "sections": [
+        {
+          "name": "Maths",
+          "questions": 30,
+          "positive": 3,
+          "negative": 1,
+          "maxMarks": 90
+        },
+        {
+          "name": "Reasoning",
+          "questions": 30,
+          "positive": 3,
+          "negative": 1,
+          "maxMarks": 90
+        },
+        {
+          "name": "English",
+          "questions": 45,
+          "positive": 3,
+          "negative": 1,
+          "maxMarks": 135
+        },
+        {
+          "name": "GS",
+          "questions": 25,
+          "positive": 3,
+          "negative": 1,
+          "maxMarks": 75
+        }
+      ],
+      "createdAt": "2026-10-31T06:17:51.184Z",
+      "id": 2
+    },
+    {
+      "key": "IBPS Clerk — Pre",
+      "name": "IBPS Clerk",
+      "tier": "Pre",
+      "durationMinutes": 60,
+      "sections": [
+        {
+          "name": "Quant",
+          "questions": 30,
+          "positive": 1,
+          "negative": 0.25,
+          "maxMarks": 30
+        },
+        {
+          "name": "Reasoning",
+          "questions": 30,
+          "positive": 1,
+          "negative": 0.25,
+          "maxMarks": 30
+        },
+        {
+          "name": "English",
+          "questions": 40,
+          "positive": 1,
+          "negative": 0.25,
+          "maxMarks": 40
+        }
+      ],
+      "createdAt": "2026-10-31T06:19:15.676Z",
+      "id": 3
+    }
+  ]
+}

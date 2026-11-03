@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
 import {X,ExternalLink} from 'lucide-react';
 import type {Mock,CustomExamProfile,SectionResult} from './db';
+const isComputerSubject=(name:string)=>/\bcomputers?\b/i.test(name);
 
 const percent=(n:number,d:number)=>d>0?100*n/d:null;
 const fmt=(n:number|null,digits=1)=>n===null?'—':`${n.toFixed(digits)}%`;
@@ -14,7 +15,7 @@ export default function MockDetail({mock,profile,onClose}:{mock:Mock;profile?:Cu
  const attempted=mock.correct+mock.incorrect,total=attempted+mock.unattempted;
  const sections:SectionResult[]=mock.sections?.length?mock.sections:[{subject:mock.subject,score:mock.score,maxScore:mock.maxScore,correct:mock.correct,incorrect:mock.incorrect,unattempted:mock.unattempted}];
  const target=profile?.targetScore;
- const displayTime=mock.timeMinutes??mock.sectionTimeMinutes??(mock.sections?.length&&mock.sections.every(s=>typeof s.timeMinutes==='number'&&s.timeMinutes>0)?mock.sections.reduce((sum,s)=>sum+(s.timeMinutes??0),0):undefined);
+ const displayTime=mock.timeMinutes??mock.sectionTimeMinutes??(mock.sections?.length&&mock.sections.filter(s=>!isComputerSubject(s.subject)).every(s=>typeof s.timeMinutes==='number'&&s.timeMinutes>0)?mock.sections.filter(s=>!isComputerSubject(s.subject)).reduce((sum,s)=>sum+(s.timeMinutes??0),0):undefined);
  return <div className="aa-md-overlay" onMouseDown={e=>{if(e.target===e.currentTarget)onClose()}}><section className="aa-md-modal" role="dialog" aria-modal="true" aria-labelledby="aa-md-title">
  <div className="aa-md-header"><div><span className="eyebrow">MOCK PERFORMANCE REPORT</span><h2 id="aa-md-title">{mock.title}</h2><p>{mock.date} · {mock.exam} · {mock.subject}</p></div><button className="aa-md-close" onClick={onClose} aria-label="Close mock analysis"><X size={21}/></button></div>
  <div className="aa-md-summary"><div><small>Total score</small><strong>{mock.score.toFixed(2)} <em>/ {mock.maxScore}</em></strong></div><div><small>Score percentage</small><strong>{fmt(percent(mock.score,mock.maxScore))}</strong></div><div><small>Accuracy</small><strong>{fmt(percent(mock.correct,attempted))}</strong></div><div><small>Attempt rate</small><strong>{fmt(percent(attempted,total))}</strong></div>{mock.percentile!==undefined&&<div><small>Percentile</small><strong>{mock.percentile.toFixed(2)}</strong></div>}{target!==undefined&&<div><small>Target score</small><strong>{mock.score>=target?'Reached':'Below target'}</strong><span>{target} marks</span></div>}</div>

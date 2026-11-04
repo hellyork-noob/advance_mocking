@@ -1,64 +1,868 @@
-import SubjectTargets from './SubjectTargets';
-import TargetPlanner from './TargetPlanner';
-import SpeedAccuracy from './SpeedAccuracy';
-import PerformanceInsights from './PerformanceInsights';
-import React,{useState} from 'react';
-import {ResponsiveContainer,AreaChart,Area,CartesianGrid,XAxis,YAxis,Tooltip,BarChart,Bar,Legend} from 'recharts';
-import {PlusCircle,ArrowRightLeft,Timer} from 'lucide-react';
-import type {Mock,Exam,SectionResult,CustomExamProfile} from './db';
-const SUBJECTS:string[]=[];
-const palette=['#8b7cff','#38bdf8','#34d399','#fbbf24'];
-const pct=(a:number,b:number)=>b>0?100*a/b:0;
-const clamp=(v:number)=>Math.max(0,Math.min(100,v));
-const acc=(m:Pick<Mock,'correct'|'incorrect'>)=>pct(m.correct,m.correct+m.incorrect);
-const score=(m:Pick<Mock,'score'|'maxScore'>)=>pct(m.score,m.maxScore);
-const ordered=(records:Mock[])=>[...records].sort((a,b)=>a.date.localeCompare(b.date)||(a.id||0)-(b.id||0));
-function Gauge({label,value,caption,color}:{label:string;value:number|null;caption:string;color:string}){const safe=value===null?0:clamp(value);return <div className="p3-gauge"><div className="p3-dial" style={{background:`conic-gradient(${color} ${safe*3.6}deg,var(--border) 0deg)`}}><div className="p3-dial-core"><strong>{value===null?'—':`${value.toFixed(1)}%`}</strong></div></div><strong>{label}</strong><small>{caption}</small></div>}
-function collectSubject(m:Mock,subject:string):SectionResult|null{const found=m.sections?.find(s=>s.subject===subject);if(found)return found;if(m.subject===subject)return {subject,score:m.score,maxScore:m.maxScore,correct:m.correct,incorrect:m.incorrect,unattempted:m.unattempted,timeMinutes:m.sectionTimeMinutes??m.timeMinutes};return null}
-export default function AnalyticsPlus({mocks,exams,exam,onAdd,profile}:{mocks:Mock[];exams:Exam[];exam:string;onAdd:()=>void;profile?:CustomExamProfile}){
- const [mode,setMode]=useState<'Full'|'Sectional'>('Full');const [subject,setSubject]=useState('');const [first,setFirst]=useState('');const [second,setSecond]=useState('');const [providerFilter,setProviderFilter]=useState('All');
- const examMocks=mocks.filter(m=>m.exam===exam);const providerOptions=[...new Set(examMocks.map(m=>m.provider?.trim()||'Unspecified'))].sort((a,b)=>a.localeCompare(b));const activeProvider=providerFilter==='All'||providerOptions.includes(providerFilter)?providerFilter:'All';const all=examMocks.filter(m=>activeProvider==='All'||(m.provider?.trim()||'Unspecified')===activeProvider);const full=all.filter(m=>m.subject==='Full Mock');
- const dynamicSubjects=[...new Set([...SUBJECTS,...(profile?.sections.map(s=>s.name)??[]),...all.flatMap(m=>m.sections?.map(s=>s.subject)??(m.subject!=='Full Mock'?[m.subject]:[]))])];
- const selectedSubject=dynamicSubjects.includes(subject)?subject:dynamicSubjects[0];
- const records=ordered(mode==='Full'?full:all.flatMap(m=>{const s=collectSubject(m,selectedSubject);return s?[{...m,...s,subject:selectedSubject}]:[]}));
- const attempts=records.reduce((n,m)=>n+m.correct+m.incorrect,0),correct=records.reduce((n,m)=>n+m.correct,0),totalQ=records.reduce((n,m)=>n+m.correct+m.incorrect+m.unattempted,0);
- const mean=records.length?records.reduce((n,m)=>n+score(m),0)/records.length:null;
- const averageMarks=records.length?records.reduce((n,m)=>n+m.score,0)/records.length:null;
- const averageMaximum=records.length?records.reduce((n,m)=>n+m.maxScore,0)/records.length:null;
- const averageAttempts=records.length?attempts/records.length:null;
- const averageQuestions=records.length?totalQ/records.length:null;
- const accuracy=attempts?pct(correct,attempts):null;
- const attemptRate=totalQ?pct(attempts,totalQ):null;
- const chart=records.map((m,i)=>({label:`#${i+1}`,name:m.title,date:m.date,score:+score(m).toFixed(1),accuracy:+acc(m).toFixed(1)}));
- const percentilePoints=ordered(all.filter(m=>typeof m.percentile==='number'&&Number.isFinite(m.percentile)&&m.percentile>=0&&m.percentile<=100)).map((m,i)=>({label:`#${i+1}`,name:m.title,date:m.date,percentile:m.percentile!,score:+score(m).toFixed(1)}));
- const avgPercentile=percentilePoints.length?percentilePoints.reduce((sum,p)=>sum+p.percentile,0)/percentilePoints.length:null;
- const subjects=dynamicSubjects.map((name,i)=>{const list=all.flatMap(m=>{const s=collectSubject(m,name);return s?[s]:[]});const attempted=list.reduce((n,s)=>n+s.correct+s.incorrect,0);const timed=all.flatMap(m=>{const s=collectSubject(m,name);if(!s)return [];const minutes=s.timeMinutes??(m.subject===name?(m.sectionTimeMinutes??m.timeMinutes):undefined);return typeof minutes==='number'&&Number.isFinite(minutes)&&minutes>0?[{attempted:s.correct+s.incorrect,minutes}]:[]});const timeSum=timed.reduce((n,t)=>n+t.minutes,0);return {name,average:list.length?+(list.reduce((n,s)=>n+score(s),0)/list.length).toFixed(1):0,averageMarks:list.length?list.reduce((n,s)=>n+s.score,0)/list.length:null,averageMax:list.length?list.reduce((n,s)=>n+s.maxScore,0)/list.length:null,accuracy:attempted?+(100*list.reduce((n,s)=>n+s.correct,0)/attempted).toFixed(1):0,count:list.length,color:palette[i%palette.length],timedCount:timed.length,speed:timeSum>0?timed.reduce((n,t)=>n+t.attempted,0)/timeSum:null}});
- const compareOptions=ordered(all);const a=compareOptions.find(m=>String(m.id)===first),b=compareOptions.find(m=>String(m.id)===second);
- const compareRows=[['Score %',a?score(a):null,b?score(b):null],['Accuracy %',a?acc(a):null,b?acc(b):null],['Attempt rate %',a?pct(a.correct+a.incorrect,a.correct+a.incorrect+a.unattempted):null,b?pct(b.correct+b.incorrect,b.correct+b.incorrect+b.unattempted):null]] as const;
- // Timed speed is only meaningful for a whole timed mock or a directly timed sectional mock.
- // Full-mock time cannot be attributed to individual subjects without section timing data.
- const speedRecords=ordered(all.filter(m=>{const t=mode==='Full'?m.timeMinutes:(m.sectionTimeMinutes??m.timeMinutes);return (mode==='Full'?m.subject==='Full Mock':m.subject===selectedSubject)&&typeof t==='number'&&Number.isFinite(t)&&t>0;}));
- const speedPoints=speedRecords.map((m,i)=>({label:`#${i+1}`,title:m.title,date:m.date,attempted:m.correct+m.incorrect,minutes:(mode==='Full'?m.timeMinutes!:(m.sectionTimeMinutes??m.timeMinutes)!),speed:+((m.correct+m.incorrect)/(mode==='Full'?m.timeMinutes!:(m.sectionTimeMinutes??m.timeMinutes)!)).toFixed(2),accuracy:+acc(m).toFixed(1)}));
- const timedCount=speedPoints.length;
- const totalTimedMinutes=speedPoints.reduce((sum,p)=>sum+p.minutes,0);
- const weightedSpeed=totalTimedMinutes>0?speedPoints.reduce((sum,p)=>sum+p.attempted,0)/totalTimedMinutes:null;
- const latestSpeed=timedCount?speedPoints[timedCount-1].speed:null;
- const previousSpeed=timedCount>1?speedPoints[timedCount-2].speed:null;
- const now=new Date().toISOString().slice(0,10);
- return <div className="p3-analytics"><div className="analyticsbar"><div><span className="eyebrow">{exam} · PERFORMANCE INTELLIGENCE</span><h2>Advanced analytics</h2></div><div className="toolbar"><label className="v21-analytics-provider">Provider <select aria-label="Filter analytics by provider" value={activeProvider} onChange={e=>{setProviderFilter(e.target.value);setFirst('');setSecond('')}}><option value="All">All providers</option>{providerOptions.map(p=><option key={p} value={p}>{p}</option>)}</select></label><div className="segmented"><button className={mode==='Full'?'selected':''} onClick={()=>setMode('Full')}>Full mocks</button><button className={mode==='Sectional'?'selected':''} onClick={()=>setMode('Sectional')}>Sectional</button></div>{mode==='Sectional'&&<select aria-label="Subject filter" value={selectedSubject} onChange={e=>setSubject(e.target.value)}>{dynamicSubjects.map(s=><option key={s}>{s}</option>)}</select>}<button className="primary" onClick={onAdd}><PlusCircle size={16}/> Add mock</button></div></div>
- <div className="stats"><div className="metric"><div className="eyebrow">Mocks analyzed</div><div className="metricvalue">{records.length}</div><small>Selected exam and category</small></div><div className="metric"><div className="eyebrow">Average score</div><div className="metricvalue v21-metric-fraction">{averageMarks===null||averageMaximum===null?'—':<>{averageMarks.toFixed(1)}<span> / {averageMaximum.toFixed(1)}</span></>}</div><small>Average marks earned / available</small></div><div className="metric"><div className="eyebrow">Average attempts</div><div className="metricvalue v21-metric-fraction">{averageAttempts===null||averageQuestions===null?'—':<>{averageAttempts.toFixed(1)}<span> / {averageQuestions.toFixed(1)}</span></>}</div><small>Questions attempted per mock</small></div><div className="metric"><div className="eyebrow">Upcoming exams</div><div className="metricvalue">{exams.filter(e=>e.date>=now).length}</div><small>Scheduled exam dates</small></div></div>
- <div className="panel p3-gauges"><div className="panelhead"><div><h3>Performance indicators</h3><p>Calculated from saved attempts; unavailable values show —</p></div></div><div className="p3-gauge-grid"><Gauge label="Score rate" value={mean} caption="Average score as % of maximum" color="#8b7cff"/><Gauge label="Accuracy" value={accuracy} caption="Correct out of attempted" color="#34d399"/><Gauge label="Attempt rate" value={attemptRate} caption="Attempted out of total questions" color="#38bdf8"/></div></div>
- <div className="panels"><div className="panel chartpanel"><div className="panelhead"><div><h3>Score & accuracy progression</h3><p>Chronological trend · percentages</p></div><span className="muted">{records.length} mocks</span></div>{chart.length?<ResponsiveContainer width="100%" height={270}><AreaChart data={chart}><defs><linearGradient id="p3grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#8b7cff" stopOpacity={.3}/><stop offset="100%" stopColor="#8b7cff" stopOpacity={0}/></linearGradient></defs><CartesianGrid stroke="var(--border)" strokeDasharray="3 5" vertical={false}/><XAxis dataKey="label" tick={{fill:'var(--muted)',fontSize:11}}/><YAxis domain={[0,100]} tick={{fill:'var(--muted)',fontSize:11}}/><Tooltip contentStyle={{background:'#172035',border:'1px solid #33415b',borderRadius:10,color:'#fff'}} labelFormatter={(_label,payload)=>payload?.[0]?.payload?.name||String(_label)} formatter={(v,name)=>[`${v}%`,name]}/><Legend/><Area type="monotone" dataKey="score" name="Score" stroke="#8b7cff" fill="url(#p3grad)" strokeWidth={2}/><Area type="monotone" dataKey="accuracy" name="Accuracy" stroke="#34d399" fill="none" strokeWidth={2}/></AreaChart></ResponsiveContainer>:<div className="empty">Add mocks to see score and accuracy trends.</div>}</div><div className="panel"><div className="panelhead"><div><h3>Subject performance</h3><p>Full mock sections + sectional mocks</p></div></div>{subjects.some(s=>s.count)?<div className="p3-subject-list">{subjects.map(s=><div className="p3-subject" key={s.name}><div className="between"><strong>{s.name}</strong><span>{s.count&&s.averageMarks!==null&&s.averageMax!==null?`${s.averageMarks.toFixed(1)} / ${s.averageMax.toFixed(1)}`:'No data'}</span></div><div className="p3-track"><span style={{width:`${clamp(s.average)}%`,background:s.color}}/></div><small>{s.count} entries · {s.count?`${s.accuracy}% accuracy`:'No records'} · {s.speed===null?'Speed —':`${s.speed.toFixed(2)} Q/min (${s.timedCount} timed)`}</small></div>)}</div>:<div className="empty">Save subject breakdowns to see performance.</div>}</div></div>
- <div className="panel v21-percentile-panel"><div className="panelhead"><div><h3>Percentile vs score</h3><p>Only saved percentile values are plotted · all mock types for the selected provider</p></div><span className="muted">{percentilePoints.length} records · Average percentile {avgPercentile===null?'—':avgPercentile.toFixed(2)}</span></div>{percentilePoints.length?<ResponsiveContainer width="100%" height={245}><AreaChart data={percentilePoints}><CartesianGrid stroke="var(--border)" strokeDasharray="3 5" vertical={false}/><XAxis dataKey="label" tick={{fill:'var(--muted)',fontSize:11}}/><YAxis domain={[0,100]} tick={{fill:'var(--muted)',fontSize:11}}/><Tooltip contentStyle={{background:'#172035',border:'1px solid #33415b',borderRadius:10,color:'#fff'}} labelFormatter={(_label,payload)=>payload?.[0]?.payload?.name||String(_label)} formatter={(v,name)=>[`${v}%`,name]}/><Legend/><Area type="monotone" dataKey="percentile" name="Percentile" stroke="#fbbf24" fill="#fbbf2417" strokeWidth={2}/><Area type="monotone" dataKey="score" name="Score %" stroke="#8b7cff" fill="none" strokeWidth={2}/></AreaChart></ResponsiveContainer>:<div className="empty">No percentile records for this provider. Add a percentile to a mock to see this chart.</div>}</div>
- <div className="panel v21-subject-speed"><div className="panelhead"><div><h3>Subject-wise speed</h3><p>Uses recorded section times from full mocks and timed sectional mocks</p></div></div><div className="tablewrap"><table><thead><tr><th>Subject</th><th>Timed entries</th><th>Weighted speed</th><th>Average marks</th></tr></thead><tbody>{subjects.map(s=><tr key={s.name}><td><strong style={{color:s.color}}>{s.name}</strong></td><td>{s.timedCount}</td><td>{s.speed===null?'—':`${s.speed.toFixed(2)} Q/min`}</td><td>{s.averageMarks===null||s.averageMax===null?'—':`${s.averageMarks.toFixed(1)} / ${s.averageMax.toFixed(1)}`}</td></tr>)}</tbody></table></div>{!subjects.length&&<div className="empty">No subject records yet.</div>}</div>
- <div className="panel p3-compare"><div className="panelhead"><div><h3><ArrowRightLeft size={17} style={{verticalAlign:'middle',marginRight:8}}/>Compare two mocks</h3><p>Compare tests within the selected exam</p></div></div><div className="p3-selects"><label>First mock<select value={first} onChange={e=>setFirst(e.target.value)}><option value="">Select a mock</option>{compareOptions.map(m=><option key={m.id} value={m.id}>{m.title} · {m.date}</option>)}</select></label><label>Second mock<select value={second} onChange={e=>setSecond(e.target.value)}><option value="">Select a mock</option>{compareOptions.map(m=><option key={m.id} value={m.id}>{m.title} · {m.date}</option>)}</select></label></div>{a&&b&&a.id!==b.id?<div className="tablewrap"><table><thead><tr><th>Metric</th><th>{a.title}</th><th>{b.title}</th><th>Relative change</th></tr></thead><tbody>{compareRows.map(([label,x,y])=><tr key={label}><td>{label}</td><td>{x===null?'—':x.toFixed(1)+'%'}</td><td>{y===null?'—':y.toFixed(1)+'%'}</td><td className={x!==null&&y!==null?(y>=x?'p3-positive':'p3-negative'):''}>{x===null||y===null?'—':x===0?(y===0?'No change':'From 0%'):`${(y-x)/Math.abs(x)>=0?'↑':'↓'} ${(Math.abs((y-x)/x)*100).toFixed(1)}%`}</td></tr>)}</tbody></table></div>:<p className="muted">Choose two different saved mocks to compare score, accuracy, and attempt rate. Relative change is measured against the first mock.</p>}</div>
- <div className="panel p4c-speed"><div className="panelhead"><div><h3><Timer size={18} style={{verticalAlign:'middle',marginRight:8}}/>Speed analytics</h3><p>{exam} · {mode==='Full'?'Full mocks':'Directly timed '+selectedSubject+' sectional mocks'} · attempted questions per minute</p></div><span className="muted">{timedCount} timed mocks</span></div>
- <div className="p4c-metrics"><div><small>Overall speed</small><strong>{weightedSpeed===null?'—':weightedSpeed.toFixed(2)}</strong><span>Q/min · weighted by time</span></div><div><small>Latest speed</small><strong>{latestSpeed===null?'—':latestSpeed.toFixed(2)}</strong><span>Q/min</span></div><div><small>Change from previous</small><strong>{latestSpeed===null||previousSpeed===null?'—':`${latestSpeed-previousSpeed>=0?'+':''}${(latestSpeed-previousSpeed).toFixed(2)}`}</strong><span>Q/min · last two timed mocks</span></div></div>
- {timedCount?<ResponsiveContainer width="100%" height={245}><AreaChart data={speedPoints}><CartesianGrid stroke="var(--border)" strokeDasharray="3 5" vertical={false}/><XAxis dataKey="label" tick={{fill:'var(--muted)',fontSize:11}}/><YAxis domain={[0,'auto']} tick={{fill:'var(--muted)',fontSize:11}}/><Tooltip contentStyle={{background:'#172035',border:'1px solid #33415b',borderRadius:10,color:'#fff'}} labelFormatter={(_label,payload)=>payload?.[0]?.payload?.title||String(_label)} formatter={(v)=>[`${v} Q/min`,'Speed']}/><Area type="monotone" dataKey="speed" stroke="#38bdf8" strokeWidth={2} fill="#38bdf825" name="Speed"/></AreaChart></ResponsiveContainer>:<div className="empty">No timed {mode==='Full'?'full mocks':selectedSubject+' sectional mocks'} yet. Enter time taken when saving a mock to enable speed trends.</div>}
- <p className="muted p4c-note">Speed = (correct + incorrect questions) ÷ time in minutes. Untimed mocks are excluded. Sectional mode uses only separately timed sectional mocks; full-mock total time is not assumed to be subject time.</p></div>
- <TargetPlanner mocks={all} exam={exam} profile={profile}/>
- <SubjectTargets mocks={all} exam={exam} profile={profile}/>
- <PerformanceInsights mocks={all} exam={exam}/>
- <SpeedAccuracy mocks={all} exam={exam}/>
- <div className="notice">Scores are normalized by each mock’s maximum marks. Exam/tier filtering uses the saved exam identifier exactly, keeping different tiers separate.</div></div>
+import SubjectTargets from "./SubjectTargets";
+import TargetPlanner from "./TargetPlanner";
+import SpeedAccuracy from "./SpeedAccuracy";
+import PerformanceInsights from "./PerformanceInsights";
+import React, { useState } from "react";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  BarChart,
+  Bar,
+  Legend,
+} from "recharts";
+import { PlusCircle, ArrowRightLeft, Timer } from "lucide-react";
+import type { Mock, Exam, SectionResult, CustomExamProfile } from "./db";
+const SUBJECTS: string[] = [];
+const palette = ["#8b7cff", "#38bdf8", "#34d399", "#fbbf24"];
+const pct = (a: number, b: number) => (b > 0 ? (100 * a) / b : 0);
+const clamp = (v: number) => Math.max(0, Math.min(100, v));
+const acc = (m: Pick<Mock, "correct" | "incorrect">) =>
+  pct(m.correct, m.correct + m.incorrect);
+const score = (m: Pick<Mock, "score" | "maxScore">) => pct(m.score, m.maxScore);
+const ordered = (records: Mock[]) =>
+  [...records].sort(
+    (a, b) => a.date.localeCompare(b.date) || (a.id || 0) - (b.id || 0),
+  );
+function Gauge({
+  label,
+  value,
+  caption,
+  color,
+}: {
+  label: string;
+  value: number | null;
+  caption: string;
+  color: string;
+}) {
+  const safe = value === null ? 0 : clamp(value);
+  return (
+    <div className="p3-gauge">
+      <div
+        className="p3-dial"
+        style={{
+          background: `conic-gradient(${color} ${safe * 3.6}deg,var(--border) 0deg)`,
+        }}
+      >
+        <div className="p3-dial-core">
+          <strong>{value === null ? "—" : `${value.toFixed(1)}%`}</strong>
+        </div>
+      </div>
+      <strong>{label}</strong>
+      <small>{caption}</small>
+    </div>
+  );
+}
+function collectSubject(m: Mock, subject: string): SectionResult | null {
+  const found = m.sections?.find((s) => s.subject === subject);
+  if (found) return found;
+  if (m.subject === subject)
+    return {
+      subject,
+      score: m.score,
+      maxScore: m.maxScore,
+      correct: m.correct,
+      incorrect: m.incorrect,
+      unattempted: m.unattempted,
+      timeMinutes: m.sectionTimeMinutes ?? m.timeMinutes,
+    };
+  return null;
+}
+export default function AnalyticsPlus({
+  mocks,
+  exams,
+  exam,
+  onAdd,
+  profile,
+}: {
+  mocks: Mock[];
+  exams: Exam[];
+  exam: string;
+  onAdd: () => void;
+  profile?: CustomExamProfile;
+}) {
+  const [mode, setMode] = useState<"Full" | "Sectional">("Full");
+  const [subject, setSubject] = useState("");
+  const [first, setFirst] = useState("");
+  const [second, setSecond] = useState("");
+  const [providerFilter, setProviderFilter] = useState("All");
+  const examMocks = mocks.filter((m) => m.exam === exam);
+  const providerOptions = [
+    ...new Set(examMocks.map((m) => m.provider?.trim() || "Unspecified")),
+  ].sort((a, b) => a.localeCompare(b));
+  const activeProvider =
+    providerFilter === "All" || providerOptions.includes(providerFilter)
+      ? providerFilter
+      : "All";
+  const all = examMocks.filter(
+    (m) =>
+      activeProvider === "All" ||
+      (m.provider?.trim() || "Unspecified") === activeProvider,
+  );
+  const full = all.filter((m) => m.subject === "Full Mock");
+  const dynamicSubjects = [
+    ...new Set([
+      ...SUBJECTS,
+      ...(profile?.sections.map((s) => s.name) ?? []),
+      ...all.flatMap(
+        (m) =>
+          m.sections?.map((s) => s.subject) ??
+          (m.subject !== "Full Mock" ? [m.subject] : []),
+      ),
+    ]),
+  ];
+  const selectedSubject = dynamicSubjects.includes(subject)
+    ? subject
+    : dynamicSubjects[0];
+  const records = ordered(
+    mode === "Full"
+      ? full
+      : all.flatMap((m) => {
+          const s = collectSubject(m, selectedSubject);
+          return s ? [{ ...m, ...s, subject: selectedSubject }] : [];
+        }),
+  );
+  const attempts = records.reduce((n, m) => n + m.correct + m.incorrect, 0),
+    correct = records.reduce((n, m) => n + m.correct, 0),
+    totalQ = records.reduce(
+      (n, m) => n + m.correct + m.incorrect + m.unattempted,
+      0,
+    );
+  
+const mainOnlyAttempts = records.map((m) => {
+  if (mode !== "Full" || !m.sections?.length) {
+    return {
+      attempted: m.correct + m.incorrect,
+      questions: m.correct + m.incorrect + m.unattempted,
+    };
+  }
+
+  const mainSections = m.sections.filter((s) => {
+    const config = profile?.sections.find(
+      (p) => p.name === s.subject
+    );
+
+    return (config?.sectionType ?? s.sectionType) !== "qualifying";
+  });
+
+  return {
+    attempted: mainSections.reduce(
+      (sum, s) => sum + s.correct + s.incorrect,
+      0
+    ),
+    questions: mainSections.reduce(
+      (sum, s) =>
+        sum + s.correct + s.incorrect + s.unattempted,
+      0
+    ),
+  };
+});
+
+const mainAverageAttempts = mainOnlyAttempts.length
+  ? mainOnlyAttempts.reduce((sum, x) => sum + x.attempted, 0) /
+    mainOnlyAttempts.length
+  : null;
+
+const mainAverageQuestions = mainOnlyAttempts.length
+  ? mainOnlyAttempts.reduce((sum, x) => sum + x.questions, 0) /
+    mainOnlyAttempts.length
+  : null;
+
+  const mean = records.length
+    ? records.reduce((n, m) => n + score(m), 0) / records.length
+    : null;
+  const averageMarks = records.length
+    ? records.reduce((n, m) => n + m.score, 0) / records.length
+    : null;
+  const averageMaximum = records.length
+    ? records.reduce((n, m) => n + m.maxScore, 0) / records.length
+    : null;
+  const averageAttempts = records.length ? attempts / records.length : null;
+  const averageQuestions = records.length ? totalQ / records.length : null;
+  const accuracy = attempts ? pct(correct, attempts) : null;
+  const attemptRate = totalQ ? pct(attempts, totalQ) : null;
+  const chart = records.map((m, i) => ({
+    label: `#${i + 1}`,
+    name: m.title,
+    date: m.date,
+    score: +score(m).toFixed(1),
+    accuracy: +acc(m).toFixed(1),
+  }));
+  const percentilePoints = ordered(
+    all.filter(
+      (m) =>
+        typeof m.percentile === "number" &&
+        Number.isFinite(m.percentile) &&
+        m.percentile >= 0 &&
+        m.percentile <= 100,
+    ),
+  ).map((m, i) => ({
+    label: `#${i + 1}`,
+    name: m.title,
+    date: m.date,
+    percentile: m.percentile!,
+    score: +score(m).toFixed(1),
+  }));
+  const avgPercentile = percentilePoints.length
+    ? percentilePoints.reduce((sum, p) => sum + p.percentile, 0) /
+      percentilePoints.length
+    : null;
+  const subjects = dynamicSubjects.map((name, i) => {
+    const list = all.flatMap((m) => {
+      const s = collectSubject(m, name);
+      return s ? [s] : [];
+    });
+    const attempted = list.reduce((n, s) => n + s.correct + s.incorrect, 0);
+    const timed = all.flatMap((m) => {
+      const s = collectSubject(m, name);
+      if (!s) return [];
+      const minutes =
+        s.timeMinutes ??
+        (m.subject === name
+          ? (m.sectionTimeMinutes ?? m.timeMinutes)
+          : undefined);
+      return typeof minutes === "number" &&
+        Number.isFinite(minutes) &&
+        minutes > 0
+        ? [{ attempted: s.correct + s.incorrect, minutes }]
+        : [];
+    });
+    const timeSum = timed.reduce((n, t) => n + t.minutes, 0);
+    return {
+      name,
+      average: list.length
+        ? +(list.reduce((n, s) => n + score(s), 0) / list.length).toFixed(1)
+        : 0,
+      averageMarks: list.length
+        ? list.reduce((n, s) => n + s.score, 0) / list.length
+        : null,
+      averageMax: list.length
+        ? list.reduce((n, s) => n + s.maxScore, 0) / list.length
+        : null,
+      accuracy: attempted
+        ? +(
+            (100 * list.reduce((n, s) => n + s.correct, 0)) /
+            attempted
+          ).toFixed(1)
+        : 0,
+      count: list.length,
+      color: palette[i % palette.length],
+      timedCount: timed.length,
+      speed:
+        timeSum > 0
+          ? timed.reduce((n, t) => n + t.attempted, 0) / timeSum
+          : null,
+    };
+  });
+  const compareOptions = ordered(all);
+  const a = compareOptions.find((m) => String(m.id) === first),
+    b = compareOptions.find((m) => String(m.id) === second);
+  const compareRows = [
+    ["Score %", a ? score(a) : null, b ? score(b) : null],
+    ["Accuracy %", a ? acc(a) : null, b ? acc(b) : null],
+    [
+      "Attempt rate %",
+      a
+        ? pct(a.correct + a.incorrect, a.correct + a.incorrect + a.unattempted)
+        : null,
+      b
+        ? pct(b.correct + b.incorrect, b.correct + b.incorrect + b.unattempted)
+        : null,
+    ],
+  ] as const;
+  // Timed speed is only meaningful for a whole timed mock or a directly timed sectional mock.
+  // Full-mock time cannot be attributed to individual subjects without section timing data.
+  const speedRecords = ordered(
+    all.filter((m) => {
+      const t =
+        mode === "Full"
+          ? m.timeMinutes
+          : (m.sectionTimeMinutes ?? m.timeMinutes);
+      return (
+        (mode === "Full"
+          ? m.subject === "Full Mock"
+          : m.subject === selectedSubject) &&
+        typeof t === "number" &&
+        Number.isFinite(t) &&
+        t > 0
+      );
+    }),
+  );
+  const speedPoints = speedRecords.map((m, i) => ({
+    label: `#${i + 1}`,
+    title: m.title,
+    date: m.date,
+    attempted: m.correct + m.incorrect,
+    minutes:
+      mode === "Full"
+        ? m.timeMinutes!
+        : (m.sectionTimeMinutes ?? m.timeMinutes)!,
+    speed: +(
+      (m.correct + m.incorrect) /
+      (mode === "Full"
+        ? m.timeMinutes!
+        : (m.sectionTimeMinutes ?? m.timeMinutes)!)
+    ).toFixed(2),
+    accuracy: +acc(m).toFixed(1),
+  }));
+  const timedCount = speedPoints.length;
+  const totalTimedMinutes = speedPoints.reduce((sum, p) => sum + p.minutes, 0);
+  const weightedSpeed =
+    totalTimedMinutes > 0
+      ? speedPoints.reduce((sum, p) => sum + p.attempted, 0) / totalTimedMinutes
+      : null;
+  const latestSpeed = timedCount ? speedPoints[timedCount - 1].speed : null;
+  const previousSpeed =
+    timedCount > 1 ? speedPoints[timedCount - 2].speed : null;
+  const now = new Date().toISOString().slice(0, 10);
+  return (
+    <div className="p3-analytics">
+      <div className="analyticsbar">
+        <div>
+          <span className="eyebrow">{exam} · PERFORMANCE INTELLIGENCE</span>
+          <h2>Advanced analytics</h2>
+        </div>
+        <div className="toolbar">
+          <label className="v21-analytics-provider">
+            Provider{" "}
+            <select
+              aria-label="Filter analytics by provider"
+              value={activeProvider}
+              onChange={(e) => {
+                setProviderFilter(e.target.value);
+                setFirst("");
+                setSecond("");
+              }}
+            >
+              <option value="All">All providers</option>
+              {providerOptions.map((p) => (
+                <option key={p} value={p}>
+                  {p}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="segmented">
+            <button
+              className={mode === "Full" ? "selected" : ""}
+              onClick={() => setMode("Full")}
+            >
+              Full mocks
+            </button>
+            <button
+              className={mode === "Sectional" ? "selected" : ""}
+              onClick={() => setMode("Sectional")}
+            >
+              Sectional
+            </button>
+          </div>
+          {mode === "Sectional" && (
+            <select
+              aria-label="Subject filter"
+              value={selectedSubject}
+              onChange={(e) => setSubject(e.target.value)}
+            >
+              {dynamicSubjects.map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+          )}
+          <button className="primary" onClick={onAdd}>
+            <PlusCircle size={16} /> Add mock
+          </button>
+        </div>
+      </div>
+      <div className="stats">
+        <div className="metric">
+          <div className="eyebrow">Mocks analyzed</div>
+          <div className="metricvalue">{records.length}</div>
+          <small>Selected exam and category</small>
+        </div>
+        <div className="metric">
+          <div className="eyebrow">Average score</div>
+          <div className="metricvalue v21-metric-fraction">
+            {averageMarks === null || averageMaximum === null ? (
+              "—"
+            ) : (
+              <>
+                {averageMarks.toFixed(1)}
+                <span> / {averageMaximum.toFixed(1)}</span>
+              </>
+            )}
+          </div>
+          <small>Average marks earned / available</small>
+        </div>
+        <div className="metric">
+          <div className="eyebrow">Average attempts</div>
+          <div className="metricvalue v21-metric-fraction">
+            {mainAverageAttempts === null || mainAverageQuestions === null ? (
+              "—"
+            ) : (
+              <>
+                {mainAverageAttempts.toFixed(1)}
+                <span> / {mainAverageQuestions.toFixed(1)}</span>
+              </>
+            )}
+          </div>
+          <small>Questions attempted per mock</small>
+        </div>
+        <div className="metric">
+          <div className="eyebrow">Upcoming exams</div>
+          <div className="metricvalue">
+            {exams.filter((e) => e.date >= now).length}
+          </div>
+          <small>Scheduled exam dates</small>
+        </div>
+      </div>
+      <div className="panel p3-gauges">
+        <div className="panelhead">
+          <div>
+            <h3>Performance indicators</h3>
+            <p>Calculated from saved attempts; unavailable values show —</p>
+          </div>
+        </div>
+        <div className="p3-gauge-grid">
+          <Gauge
+            label="Score rate"
+            value={mean}
+            caption="Average score as % of maximum"
+            color="#8b7cff"
+          />
+          <Gauge
+            label="Accuracy"
+            value={accuracy}
+            caption="Correct out of attempted"
+            color="#34d399"
+          />
+          <Gauge
+            label="Attempt rate"
+            value={attemptRate}
+            caption="Attempted out of total questions"
+            color="#38bdf8"
+          />
+        </div>
+      </div>
+      <div className="panels">
+        <div className="panel chartpanel">
+          <div className="panelhead">
+            <div>
+              <h3>Score & accuracy progression</h3>
+              <p>Chronological trend · percentages</p>
+            </div>
+            <span className="muted">{records.length} mocks</span>
+          </div>
+          {chart.length ? (
+            <ResponsiveContainer width="100%" height={270}>
+              <AreaChart data={chart}>
+                <defs>
+                  <linearGradient id="p3grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#8b7cff" stopOpacity={0.3} />
+                    <stop offset="100%" stopColor="#8b7cff" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid
+                  stroke="var(--border)"
+                  strokeDasharray="3 5"
+                  vertical={false}
+                />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fill: "var(--muted)", fontSize: 11 }}
+                />
+                <YAxis
+                  domain={[0, 100]}
+                  tick={{ fill: "var(--muted)", fontSize: 11 }}
+                />
+                <Tooltip
+                  contentStyle={{
+                    background: "#172035",
+                    border: "1px solid #33415b",
+                    borderRadius: 10,
+                    color: "#fff",
+                  }}
+                  labelFormatter={(_label, payload) =>
+                    payload?.[0]?.payload?.name || String(_label)
+                  }
+                  formatter={(v, name) => [`${v}%`, name]}
+                />
+                <Legend />
+                <Area
+                  type="monotone"
+                  dataKey="score"
+                  name="Score"
+                  stroke="#8b7cff"
+                  fill="url(#p3grad)"
+                  strokeWidth={2}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="accuracy"
+                  name="Accuracy"
+                  stroke="#34d399"
+                  fill="none"
+                  strokeWidth={2}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="empty">
+              Add mocks to see score and accuracy trends.
+            </div>
+          )}
+        </div>
+        <div className="panel">
+          <div className="panelhead">
+            <div>
+              <h3>Subject performance</h3>
+              <p>Full mock sections + sectional mocks</p>
+            </div>
+          </div>
+          {subjects.some((s) => s.count) ? (
+            <div className="p3-subject-list">
+              {subjects.map((s) => (
+                <div className="p3-subject" key={s.name}>
+                  <div className="between">
+                    <strong>{s.name}</strong>
+                    <span>
+                      {s.count &&
+                      s.averageMarks !== null &&
+                      s.averageMax !== null
+                        ? `${s.averageMarks.toFixed(1)} / ${s.averageMax.toFixed(1)}`
+                        : "No data"}
+                    </span>
+                  </div>
+                  <div className="p3-track">
+                    <span
+                      style={{
+                        width: `${clamp(s.average)}%`,
+                        background: s.color,
+                      }}
+                    />
+                  </div>
+                  <small>
+                    {s.count} entries ·{" "}
+                    {s.count ? `${s.accuracy}% accuracy` : "No records"} ·{" "}
+                    {s.speed === null
+                      ? "Speed —"
+                      : `${s.speed.toFixed(2)} Q/min (${s.timedCount} timed)`}
+                  </small>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty">
+              Save subject breakdowns to see performance.
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="panel v21-percentile-panel">
+        <div className="panelhead">
+          <div>
+            <h3>Percentile vs score</h3>
+            <p>
+              Only saved percentile values are plotted · all mock types for the
+              selected provider
+            </p>
+          </div>
+          <span className="muted">
+            {percentilePoints.length} records · Average percentile{" "}
+            {avgPercentile === null ? "—" : avgPercentile.toFixed(2)}
+          </span>
+        </div>
+        {percentilePoints.length ? (
+          <ResponsiveContainer width="100%" height={245}>
+            <AreaChart data={percentilePoints}>
+              <CartesianGrid
+                stroke="var(--border)"
+                strokeDasharray="3 5"
+                vertical={false}
+              />
+              <XAxis
+                dataKey="label"
+                tick={{ fill: "var(--muted)", fontSize: 11 }}
+              />
+              <YAxis
+                domain={[0, 100]}
+                tick={{ fill: "var(--muted)", fontSize: 11 }}
+              />
+              <Tooltip
+                contentStyle={{
+                  background: "#172035",
+                  border: "1px solid #33415b",
+                  borderRadius: 10,
+                  color: "#fff",
+                }}
+                labelFormatter={(_label, payload) =>
+                  payload?.[0]?.payload?.name || String(_label)
+                }
+                formatter={(v, name) => [`${v}%`, name]}
+              />
+              <Legend />
+              <Area
+                type="monotone"
+                dataKey="percentile"
+                name="Percentile"
+                stroke="#fbbf24"
+                fill="#fbbf2417"
+                strokeWidth={2}
+              />
+              <Area
+                type="monotone"
+                dataKey="score"
+                name="Score %"
+                stroke="#8b7cff"
+                fill="none"
+                strokeWidth={2}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="empty">
+            No percentile records for this provider. Add a percentile to a mock
+            to see this chart.
+          </div>
+        )}
+      </div>
+      <div className="panel v21-subject-speed">
+        <div className="panelhead">
+          <div>
+            <h3>Subject-wise speed</h3>
+            <p>
+              Uses recorded section times from full mocks and timed sectional
+              mocks
+            </p>
+          </div>
+        </div>
+        <div className="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Timed entries</th>
+                <th>Weighted speed</th>
+                <th>Average marks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {subjects.map((s) => (
+                <tr key={s.name}>
+                  <td>
+                    <strong style={{ color: s.color }}>{s.name}</strong>
+                  </td>
+                  <td>{s.timedCount}</td>
+                  <td>
+                    {s.speed === null ? "—" : `${s.speed.toFixed(2)} Q/min`}
+                  </td>
+                  <td>
+                    {s.averageMarks === null || s.averageMax === null
+                      ? "—"
+                      : `${s.averageMarks.toFixed(1)} / ${s.averageMax.toFixed(1)}`}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {!subjects.length && (
+          <div className="empty">No subject records yet.</div>
+        )}
+      </div>
+      <div className="panel p3-compare">
+        <div className="panelhead">
+          <div>
+            <h3>
+              <ArrowRightLeft
+                size={17}
+                style={{ verticalAlign: "middle", marginRight: 8 }}
+              />
+              Compare two mocks
+            </h3>
+            <p>Compare tests within the selected exam</p>
+          </div>
+        </div>
+        <div className="p3-selects">
+          <label>
+            First mock
+            <select value={first} onChange={(e) => setFirst(e.target.value)}>
+              <option value="">Select a mock</option>
+              {compareOptions.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.title} · {m.date}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Second mock
+            <select value={second} onChange={(e) => setSecond(e.target.value)}>
+              <option value="">Select a mock</option>
+              {compareOptions.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.title} · {m.date}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        {a && b && a.id !== b.id ? (
+          <div className="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>{a.title}</th>
+                  <th>{b.title}</th>
+                  <th>Relative change</th>
+                </tr>
+              </thead>
+              <tbody>
+                {compareRows.map(([label, x, y]) => (
+                  <tr key={label}>
+                    <td>{label}</td>
+                    <td>{x === null ? "—" : x.toFixed(1) + "%"}</td>
+                    <td>{y === null ? "—" : y.toFixed(1) + "%"}</td>
+                    <td
+                      className={
+                        x !== null && y !== null
+                          ? y >= x
+                            ? "p3-positive"
+                            : "p3-negative"
+                          : ""
+                      }
+                    >
+                      {x === null || y === null
+                        ? "—"
+                        : x === 0
+                          ? y === 0
+                            ? "No change"
+                            : "From 0%"
+                          : `${(y - x) / Math.abs(x) >= 0 ? "↑" : "↓"} ${(Math.abs((y - x) / x) * 100).toFixed(1)}%`}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="muted">
+            Choose two different saved mocks to compare score, accuracy, and
+            attempt rate. Relative change is measured against the first mock.
+          </p>
+        )}
+      </div>
+      <div className="panel p4c-speed">
+        <div className="panelhead">
+          <div>
+            <h3>
+              <Timer
+                size={18}
+                style={{ verticalAlign: "middle", marginRight: 8 }}
+              />
+              Speed analytics
+            </h3>
+            <p>
+              {exam} ·{" "}
+              {mode === "Full"
+                ? "Full mocks"
+                : "Directly timed " + selectedSubject + " sectional mocks"}{" "}
+              · attempted questions per minute
+            </p>
+          </div>
+          <span className="muted">{timedCount} timed mocks</span>
+        </div>
+        <div className="p4c-metrics">
+          <div>
+            <small>Overall speed</small>
+            <strong>
+              {weightedSpeed === null ? "—" : weightedSpeed.toFixed(2)}
+            </strong>
+            <span>Q/min · weighted by time</span>
+          </div>
+          <div>
+            <small>Latest speed</small>
+            <strong>
+              {latestSpeed === null ? "—" : latestSpeed.toFixed(2)}
+            </strong>
+            <span>Q/min</span>
+          </div>
+          <div>
+            <small>Change from previous</small>
+            <strong>
+              {latestSpeed === null || previousSpeed === null
+                ? "—"
+                : `${latestSpeed - previousSpeed >= 0 ? "+" : ""}${(latestSpeed - previousSpeed).toFixed(2)}`}
+            </strong>
+            <span>Q/min · last two timed mocks</span>
+          </div>
+        </div>
+        {timedCount ? (
+          <ResponsiveContainer width="100%" height={245}>
+            <AreaChart data={speedPoints}>
+              <CartesianGrid
+                stroke="var(--border)"
+                strokeDasharray="3 5"
+                vertical={false}
+              />
+              <XAxis
+                dataKey="label"
+                tick={{ fill: "var(--muted)", fontSize: 11 }}
+              />
+              <YAxis
+                domain={[0, "auto"]}
+                tick={{ fill: "var(--muted)", fontSize: 11 }}
+              />
+              <Tooltip
+                contentStyle={{
+                  background: "#172035",
+                  border: "1px solid #33415b",
+                  borderRadius: 10,
+                  color: "#fff",
+                }}
+                labelFormatter={(_label, payload) =>
+                  payload?.[0]?.payload?.title || String(_label)
+                }
+                formatter={(v) => [`${v} Q/min`, "Speed"]}
+              />
+              <Area
+                type="monotone"
+                dataKey="speed"
+                stroke="#38bdf8"
+                strokeWidth={2}
+                fill="#38bdf825"
+                name="Speed"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="empty">
+            No timed{" "}
+            {mode === "Full"
+              ? "full mocks"
+              : selectedSubject + " sectional mocks"}{" "}
+            yet. Enter time taken when saving a mock to enable speed trends.
+          </div>
+        )}
+        <p className="muted p4c-note">
+          Speed = (correct + incorrect questions) ÷ time in minutes. Untimed
+          mocks are excluded. Sectional mode uses only separately timed
+          sectional mocks; full-mock total time is not assumed to be subject
+          time.
+        </p>
+      </div>
+      <TargetPlanner mocks={all} exam={exam} profile={profile} />
+      <SubjectTargets mocks={all} exam={exam} profile={profile} />
+      <PerformanceInsights mocks={all} exam={exam} />
+      <SpeedAccuracy mocks={all} exam={exam} />
+      <div className="notice">
+        Scores are normalized by each mock’s maximum marks. Exam/tier filtering
+        uses the saved exam identifier exactly, keeping different tiers
+        separate.
+      </div>
+    </div>
+  );
 }
